@@ -57,7 +57,7 @@ renderer.setPixelRatio(2);
 let object;
 
 const loader = new GLTFLoader();
-loader.load('public/scene.gltf', function (gltf) {
+loader.load('scene.gltf', function (gltf) {
     object = gltf.scene;
     object.scale.set(10, 10, 10)
 
