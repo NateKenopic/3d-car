@@ -7,3 +7,9 @@
 body, html {
     overflow-x: hidden;
 }
+
+.title-header {
+    text-align: center;
+    background-color: #DDDDDD;
+    font-size: 3rem;
+}

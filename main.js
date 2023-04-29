@@ -5,25 +5,21 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xdddddd);
 
-const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 5000);
-camera.rotation.y = 45 / 180 * Math.PI;
-camera.position.x = 800;
-camera.position.y = 100;
-camera.position.z = 1000;
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 5000);
+camera.rotation.y = 45;
+camera.position.x = 30;
+camera.position.y = 10;
 
 scene.add(camera);
 
 const canvas = document.querySelector('.webgl');
-const renderer = new THREE.WebGLRenderer({canvas});
-renderer.setSize(window.innerWidth, window.innerHeight);
-
 
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
 controls.enablePan = false;
 controls.enableZoom = false;
 controls.autoRotate = true;
-controls.autoRotateSpeed = 10;
+controls.autoRotateSpeed = 3;
 
 
 const hlight = new THREE.AmbientLight(0x404040, 100);
@@ -54,17 +50,24 @@ light4.position.set(-500, 300, 500);
 scene.add(light4);
 
 
+const renderer = new THREE.WebGLRenderer({canvas});
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(2);
+
+let object;
+
 const loader = new GLTFLoader();
-loader.load('./scene.gltf', function (gltf) {
-    let car = gltf.scene.children[0];
-    car.scale.set(0.5, 0.5, 0.5);
-    scene.add(gltf.scene);
-    // animate();
-    renderer.render(scene, camera);
+loader.load('scene.gltf', function (gltf) {
+    object = gltf.scene;
+    object.scale.set(10, 10, 10)
+
+    scene.add(object);
 });
 
 function animate() {
+    window.requestAnimationFrame(animate);
     controls.update();
     renderer.render(scene, camera);
-    window.requestAnimationFrame(animate);
 }
+
+animate();
